@@ -9,14 +9,14 @@ export default function useEncontrarDiarista() {
     }>();
 
   useEffect(() => {
-    async () => {
+    (async () => {
       try {
         const gpsPermitido = await pedirPermissao();
         if (gpsPermitido) {
           setCoordenadas(await pegarCoordenadas());
         }
       } catch (erro) {}
-    };
+    })();
   }, []);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function useEncontrarDiarista() {
 
   async function pedirPermissao(): Promise<boolean> {
     try {
-      const { status } = await Location.requestBackgroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       return status === "granted";
     } catch (error) {
       return false;
@@ -53,7 +53,7 @@ export default function useEncontrarDiarista() {
     if (coordenadas) {
       const endereco = await Location.reverseGeocodeAsync(coordenadas);
       if (endereco.length > 0) {
-        endereco[0].postalCode || "";
+        return endereco[0].postalCode || "";
       }
     }
     return "";

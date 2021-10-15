@@ -13,7 +13,7 @@ import {
   ResponseContainer,
 } from "ui/styles/pages/encontrar-diarista.styled";
 import useIndex from "data/hooks/pages/useIndex.page";
-import useEncontrarDiarista from "./EncontrarDiarista.page.mobile";
+import useEncontrarDiarista from "../data/hooks/pages/useEncontrarDiarista.page.mobile";
 
 const EncontrarDiaristas: React.FC = () => {
   const { colors } = useTheme();
@@ -31,7 +31,7 @@ const EncontrarDiaristas: React.FC = () => {
     { cepAutomatico } = useEncontrarDiarista();
 
   useEffect(() => {
-    if (cepAutomatico && !cep) {
+    if (cepAutomatico) {
       setCep(cepAutomatico);
       buscarProfissionais(cepAutomatico);
     }
